@@ -12,6 +12,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Add PPA
+        run: |
+          sudo add-apt-repository ppa:git-core/ppa -y
+
       - name: Update the system
         run: |
           sudo apt update -y
