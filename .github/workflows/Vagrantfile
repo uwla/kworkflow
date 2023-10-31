@@ -1,0 +1,18 @@
+Vagrant.configure("2") do |config|
+  config.vm.define "debian" do |debian|
+    # Set the debian box
+    debian.vm.box = "generic/debian10"
+
+    # Installing Ansible
+    debian.vm.provision "shell",
+      inline: "sudo apt-get update -y && sudo apt-get install -y git"
+
+    # Executing Ansible within the VM
+    debian.vm.provision "shell",
+      inline: "git clone https://github.com/kworkflow/kworkflow"
+
+    debian.vm.provision "shell",
+      inline: "echo 'kworkflow installed!'"
+
+  end
+end
