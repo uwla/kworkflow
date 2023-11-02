@@ -1,0 +1,32 @@
+name: Podman
+on:
+  [push, pull_request]
+jobs:
+  test:
+    name: KW install on Podman container
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install podman
+        run: |
+          sudo apt update
+          sudo apt-get -y install podman
+
+      - name: Pull podman container image
+        run: |
+          podman pull alpine
+
+      - name: Create container
+        run: |
+          podman run --privileged --detach --name KW alpine
+
+      - name: Install bash and git in the container
+        run: |
+          podman exec KW apk add git bash
+
+      - name: Download kw in the container
+        run: |
+          podman exec KW git clone https://github.com/kworkflow/kworkflow /tmp/kw
+
+      - name: Install kw in the ocntainer
+        run: |
+          podman exec KW /tmp/kw/kw -i --force
