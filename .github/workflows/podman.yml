@@ -17,4 +17,4 @@ jobs:
 
       - name: Create container
         run: |
-          podman run alpine sh -c "apk update && apk add git bash && git clone https://github.com/kworkflow/kworkflow /tmp/kw && /tmp/kw/kw -i --force"
+          podman run ubuntu sh -c "apt update -y && apt install -y git bash && git clone https://github.com/kworkflow/kworkflow /kw && cd /kw && git checkout unstable && DEBIAN_FRONTEND=noninteractive ./setup.sh -i --force"
